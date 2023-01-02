@@ -10,10 +10,10 @@ import urllib3
 
 try:
     from django.utils.six.moves.urllib.parse import (
-        urlparse, urlencode, quote_plus)
+        urlparse, urlencode, quote_plus, quote)
 except ImportError:
     # Django 3 has no six
-    from urllib.parse import urlparse, urlencode, quote_plus
+    from urllib.parse import urlparse, urlencode, quote_plus, quote
 
 from django.shortcuts import redirect
 from django.views.generic import View
@@ -165,7 +165,7 @@ class ProxyView(View):
 
     def get_quoted_path(self, path):
         """Return quoted path to be used in proxied request"""
-        return quote_plus(path.encode('utf8'), QUOTE_SAFE)
+        return quote(path.encode('utf8'), QUOTE_SAFE)
 
     def get_encoded_query_params(self):
         """Return encoded query params to be used in proxied request"""
